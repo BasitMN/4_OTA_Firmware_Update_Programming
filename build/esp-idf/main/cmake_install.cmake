@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/2_WiFi_Application_Resources/main
+# Install script for directory: C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/4_OTA_Firmware_Update_Programming/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

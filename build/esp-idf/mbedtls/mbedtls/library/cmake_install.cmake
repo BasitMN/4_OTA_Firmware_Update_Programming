@@ -38,14 +38,14 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/2_WiFi_Application_Resources/build/esp-idf/mbedtls/mbedtls/library/libmbedcrypto.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/4_OTA_Firmware_Update_Programming/build/esp-idf/mbedtls/mbedtls/library/libmbedcrypto.a")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/2_WiFi_Application_Resources/build/esp-idf/mbedtls/mbedtls/library/libmbedx509.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/4_OTA_Firmware_Update_Programming/build/esp-idf/mbedtls/mbedtls/library/libmbedx509.a")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/2_WiFi_Application_Resources/build/esp-idf/mbedtls/mbedtls/library/libmbedtls.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/4_OTA_Firmware_Update_Programming/build/esp-idf/mbedtls/mbedtls/library/libmbedtls.a")
 endif()
 

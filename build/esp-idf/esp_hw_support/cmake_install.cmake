@@ -39,11 +39,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/2_WiFi_Application_Resources/build/esp-idf/esp_hw_support/port/esp32s3/cmake_install.cmake")
+  include("C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/4_OTA_Firmware_Update_Programming/build/esp-idf/esp_hw_support/port/esp32s3/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/2_WiFi_Application_Resources/build/esp-idf/esp_hw_support/lowpower/cmake_install.cmake")
+  include("C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/4_OTA_Firmware_Update_Programming/build/esp-idf/esp_hw_support/lowpower/cmake_install.cmake")
 endif()
 

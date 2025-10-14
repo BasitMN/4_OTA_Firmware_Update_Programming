@@ -18,7 +18,7 @@
 #include "rgb_led.h"
 #include "tasks_common.h"
 #include "wifi_app.h"
-
+#include "http_server.h"
 // Tag used for ESP serial console messages
 static const char TAG [] = "wifi_app";
 

@@ -1,4 +1,4 @@
-/* * Data converted from C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/2_WiFi_Application_Resources/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from C:/Users/abuam/OneDrive/Documents/ESP-IDF/Udemy_ESP32_FreeRTOS/4_OTA_Firmware_Update_Programming/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 #if !defined (__APPLE__) && !defined (__linux__)
