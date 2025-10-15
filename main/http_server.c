@@ -214,6 +214,24 @@ esp_err_t http_server_OTA_update_handler(httpd_req_t *req)
 
 	const esp_partition_t *update_partition = esp_ota_get_next_update_partition(NULL);
 
+	// Validate the update partition
+	if (update_partition == NULL)
+	{
+		ESP_LOGE(TAG, "http_server_OTA_update_handler: No OTA update partition found! Check partition table configuration.");
+		return ESP_FAIL;
+	}
+
+	ESP_LOGI(TAG, "http_server_OTA_update_handler: Update partition found - label: %s, subtype: %d, size: %ld bytes", 
+			 update_partition->label, update_partition->subtype, update_partition->size);
+
+	// Check if the OTA file size is reasonable
+	if (content_length > update_partition->size)
+	{
+		ESP_LOGE(TAG, "http_server_OTA_update_handler: OTA file too large (%d bytes) for partition (%ld bytes)", 
+				 content_length, update_partition->size);
+		return ESP_FAIL;
+	}
+
 	do
 	{
 		// Read the data for the request
@@ -245,11 +263,13 @@ esp_err_t http_server_OTA_update_handler(httpd_req_t *req)
 			esp_err_t err = esp_ota_begin(update_partition, OTA_SIZE_UNKNOWN, &ota_handle);
 			if (err != ESP_OK)
 			{
+				ESP_LOGE(TAG, "http_server_OTA_update_handler: esp_ota_begin failed with error: %s (%d)", esp_err_to_name(err), err);
 				printf("http_server_OTA_update_handler: Error with OTA begin, cancelling OTA\r\n");
 				return ESP_FAIL;
 			}
 			else
 			{
+				ESP_LOGI(TAG, "http_server_OTA_update_handler: OTA begin successful");
 				printf("http_server_OTA_update_handler: Writing to partition subtype %d at offset 0x%lx\r\n", update_partition->subtype, update_partition->address);
 			}
 
