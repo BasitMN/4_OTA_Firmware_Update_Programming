@@ -11,6 +11,7 @@
 #include "esp_timer.h"
 #include "sys/param.h"
 
+#include "DHT22.h"
 #include "http_server.h"
 #include "tasks_common.h"
 #include "wifi_app.h"
@@ -214,24 +215,6 @@ esp_err_t http_server_OTA_update_handler(httpd_req_t *req)
 
 	const esp_partition_t *update_partition = esp_ota_get_next_update_partition(NULL);
 
-	// Validate the update partition
-	if (update_partition == NULL)
-	{
-		ESP_LOGE(TAG, "http_server_OTA_update_handler: No OTA update partition found! Check partition table configuration.");
-		return ESP_FAIL;
-	}
-
-	ESP_LOGI(TAG, "http_server_OTA_update_handler: Update partition found - label: %s, subtype: %d, size: %ld bytes", 
-			 update_partition->label, update_partition->subtype, update_partition->size);
-
-	// Check if the OTA file size is reasonable
-	if (content_length > update_partition->size)
-	{
-		ESP_LOGE(TAG, "http_server_OTA_update_handler: OTA file too large (%d bytes) for partition (%ld bytes)", 
-				 content_length, update_partition->size);
-		return ESP_FAIL;
-	}
-
 	do
 	{
 		// Read the data for the request
@@ -263,13 +246,11 @@ esp_err_t http_server_OTA_update_handler(httpd_req_t *req)
 			esp_err_t err = esp_ota_begin(update_partition, OTA_SIZE_UNKNOWN, &ota_handle);
 			if (err != ESP_OK)
 			{
-				ESP_LOGE(TAG, "http_server_OTA_update_handler: esp_ota_begin failed with error: %s (%d)", esp_err_to_name(err), err);
 				printf("http_server_OTA_update_handler: Error with OTA begin, cancelling OTA\r\n");
 				return ESP_FAIL;
 			}
 			else
 			{
-				ESP_LOGI(TAG, "http_server_OTA_update_handler: OTA begin successful");
 				printf("http_server_OTA_update_handler: Writing to partition subtype %d at offset 0x%lx\r\n", update_partition->subtype, update_partition->address);
 			}
 
@@ -331,6 +312,24 @@ esp_err_t http_server_OTA_status_handler(httpd_req_t *req)
 	return ESP_OK;
 }
 
+/**
+ * DHT sensor readings JSON handler responds with DHT22 sensor data
+ * @param req HTTP request for which the uri needs to be handled
+ * @return ESP_OK
+ */
+static esp_err_t http_server_get_dht_sensor_readings_json_handler(httpd_req_t *req)
+{
+	ESP_LOGI(TAG, "/dhtSensor.json requested");
+
+	char dhtSensorJSON[100];
+
+	sprintf(dhtSensorJSON, "{\"temp\":\"%.1f\",\"humidity\":\"%.1f\"}", getTemperature(), getHumidity());
+
+	httpd_resp_set_type(req, "application/json");
+	httpd_resp_send(req, dhtSensorJSON, strlen(dhtSensorJSON));
+
+	return ESP_OK;
+}
 
 /**
  * Sets up the default httpd server configuration.
@@ -435,6 +434,15 @@ static httpd_handle_t http_server_configure(void)
 				.user_ctx = NULL
 		};
 		httpd_register_uri_handler(http_server_handle, &OTA_status);
+
+		// register dhtSensor.json handler
+		httpd_uri_t dht_sensor_json = {
+				.uri = "/dhtSensor.json",
+				.method = HTTP_GET,
+				.handler = http_server_get_dht_sensor_readings_json_handler,
+				.user_ctx = NULL
+		};
+		httpd_register_uri_handler(http_server_handle, &dht_sensor_json);
 
 		return http_server_handle;
 	}
