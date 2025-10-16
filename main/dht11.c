@@ -25,6 +25,10 @@
 
 static const char *TAG = "DHT11";
 
+// Global variables to store latest sensor readings (shared with other tasks)
+static float current_humidity = 0.0f;
+static float current_temperature = 0.0f;
+
 /**
  * @brief Wait for GPIO pin to reach specified level with timeout
  */
@@ -125,8 +129,24 @@ esp_err_t dht11_read(gpio_num_t gpio_num, dht11_reading_t *reading)
     reading->humidity = (float)data[0];
     reading->temperature = (float)data[2];
 
+    // Update global variables for access by other tasks (HTTP server, etc.)
+    current_humidity = reading->humidity;
+    current_temperature = reading->temperature;
+
     ESP_LOGI(TAG, "Temperature: %.1f°C, Humidity: %.1f%%", 
              reading->temperature, reading->humidity);
 
     return ESP_OK;
+}
+
+// == Getter functions for accessing sensor data from other tasks ==
+
+float dht11_get_humidity(void)
+{
+    return current_humidity;
+}
+
+float dht11_get_temperature(void)
+{
+    return current_temperature;
 }

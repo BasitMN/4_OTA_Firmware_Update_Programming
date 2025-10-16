@@ -30,6 +30,20 @@ typedef struct {
  */
 esp_err_t dht11_read(gpio_num_t gpio_num, dht11_reading_t *reading);
 
+/**
+ * @brief Get the latest humidity reading
+ * 
+ * @return Current humidity in percent (0-100)
+ */
+float dht11_get_humidity(void);
+
+/**
+ * @brief Get the latest temperature reading
+ * 
+ * @return Current temperature in Celsius
+ */
+float dht11_get_temperature(void);
+
 #ifdef __cplusplus
 }
 #endif
