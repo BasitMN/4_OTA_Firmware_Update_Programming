@@ -11,7 +11,7 @@
 #include "esp_timer.h"
 #include "sys/param.h"
 
-#include "DHT22.h"
+#include "dht11.h"
 #include "http_server.h"
 #include "tasks_common.h"
 #include "wifi_app.h"
@@ -323,7 +323,7 @@ static esp_err_t http_server_get_dht_sensor_readings_json_handler(httpd_req_t *r
 
 	char dhtSensorJSON[100];
 
-	sprintf(dhtSensorJSON, "{\"temp\":\"%.1f\",\"humidity\":\"%.1f\"}", getTemperature(), getHumidity());
+	sprintf(dhtSensorJSON, "{\"temp\":%.1f,\"humidity\":%.1f}", dht11_get_temperature(), dht11_get_humidity());
 
 	httpd_resp_set_type(req, "application/json");
 	httpd_resp_send(req, dhtSensorJSON, strlen(dhtSensorJSON));
